@@ -1,7 +1,10 @@
 package ospace.com.ospacemusicplayerweiget;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class Weiget extends LinearLayout implements View.OnClickListener{
 
-private  String url;
+
 @Bind(R.id.seek_bar_music_player)
  SeekBar seek_bar_music_player;
 @Bind(R.id.tv_music_player_time_left)
@@ -32,14 +35,13 @@ ImageView iv_play_back;
 ImageView iv_play_forward;
 @Bind(R.id.iv_play_pause)
 ImageView iv_play_pause;
-
-
-    public String getUrl() {
-        return url;
-    }
+private ServiceConnection connection;
+private MusicControllerInterf controller;
+private MusicPlayingState isMusicPlaying;
 
     public void setUrl(String url) {
-        this.url = url;
+       controller.setMusicURL(url);
+
     }
 
     public Weiget(Context context) {
@@ -49,47 +51,49 @@ ImageView iv_play_pause;
     public Weiget(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
+//// TODO: 2017/2/9  
     public Weiget(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View view = LayoutInflater.from(context).inflate(R.layout.music_player_layout,this,true);
         ButterKnife.bind(view);
         iv_play_pause.setOnClickListener(this);
+        Intent intent = new Intent(getContext(),MusicPlayerService.class);
+
+        getContext().startService(intent);
+        getContext().bindService(intent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                controller =   (MusicControllerInterf)service;
+
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        }, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onClick(View v) {
+        isMusicPlaying=controller.isMusicPlaying();
         switch(v.getId()){
-            case R.id.iv_play_pause:
 
+            case R.id.iv_play_pause:
+                if(isMusicPlaying ==MusicPlayingState.PAUSE||isMusicPlaying==MusicPlayingState.STOP)
+                {controller.playMusic();}
+                else
+controller.pauseMusic();
                 break;
             case R.id.iv_play_forward:
+controller.playforwardMuisc();
                 break;
             case R.id.iv_play_back:
+                controller.playBackwardMusic();
                 break;
 
         }
 
     }
-    protected void playMusic(){
-        Intent intent = new Intent(getContext(),MusicPlayerService.class);
-        intent.putExtra("option","play");
-        getContext().startService(intent);
 
-    }
-    protected  void pauseMusic(){
-        Intent intent = new Intent(getContext(),MusicPlayerService.class);
-        intent.putExtra("option","pause");
-        getContext().startService(intent);
-    }
-    protected void playForward(){
-        Intent intent = new Intent(getContext(),MusicPlayerService.class);
-        intent.putExtra("option","forward");
-        getContext().startService(intent);
-    }
-    protected void playBackward(){
-        Intent intent = new Intent(getContext(),MusicPlayerService.class);
-        intent.putExtra("option","backward");
-        getContext().startService(intent);
-    }
 }

@@ -10,8 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ospace.com.ospacemusicplayerweiget.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+   <ospace.com.ospacemusicplayerweiget.Weiget
+       android:layout_width="match_parent"
+       android:id="@+id/player"
+       android:layout_height="80dp"></ospace.com.ospacemusicplayerweiget.Weiget>
 </RelativeLayout>
