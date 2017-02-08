@@ -1,0 +1,2 @@
+# OSpaceMusicPlayerWeiget
+#将Ospace中用到的音乐播放控件提取出来单独作为一个独立的组合控件使用
