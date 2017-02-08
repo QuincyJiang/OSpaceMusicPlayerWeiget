@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ospace.com.ospacemusicplayerweiget.CustomRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/rl_music_player"
+    android:background="@drawable/library_voice_ground_glass"
+    android:layout_height="80dip"
+    android:layout_alignParentBottom="true"
+
+    android:visibility="visible"
+    android:layout_alignParentStart="true">
+    <SeekBar
+        android:id="@+id/seek_bar_music_player"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
+        style="@style/Widget.SeekBar.Normal"
+        android:layout_width="match_parent"
+
+        android:layout_height="8dp"
+        android:maxHeight="8dp"
+        android:minHeight="8dp"
+
+        android:thumb="@drawable/drager_seek_bar"
+        android:max="100"
+        android:progress="0"
+        android:secondaryProgress="0"
+         />
+    <!--<SeekBar-->
+    <!--style="@style/Widget.SeekBar.Normal"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="5dp"-->
+    <!--android:max="100"-->
+    <!--android:progress="10"-->
+    <!--android:background="@color/music_player_seek_bar"-->
+    <!--/>-->
+    <TextView
+        android:id="@+id/tv_music_player_time_left"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="3dp"
+        android:layout_below="@id/seek_bar_music_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="00:00"/>
+    tv_music_player_total_time
+    <TextView
+        android:id="@+id/tv_music_player_total_time"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="3dp"
+        android:layout_below="@id/seek_bar_music_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="00:00"/>
+    <ImageView
+        android:id="@+id/iv_play_back"
+        android:layout_width="20dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/library_voice_mediacontroller_decelerate"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_play_pause"
+        android:layout_height="20dp"></ImageView>
+    <ImageView
+        android:background="@drawable/library_voice_mediacontroller_play"
+        android:id="@+id/iv_play_pause"
+        android:layout_width="20dp"
+        android:layout_centerInParent="true"
+        android:layout_height="20dp" ></ImageView>
+    <ImageView
+        android:layout_marginLeft="40dp"
+        android:id="@+id/iv_play_forward"
+        android:background="@drawable/library_voice_mediacontroller_speed"
+        android:layout_width="20dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_play_pause"
+        android:layout_height="20dp"></ImageView>
+
+</ospace.com.ospacemusicplayerweiget.CustomRelativeLayout>

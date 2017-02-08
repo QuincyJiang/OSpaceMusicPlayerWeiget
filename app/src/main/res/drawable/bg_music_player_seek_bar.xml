@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item android:id="@android:id/background" android:drawable="@color/music_player_seek_bar" />-->
+
+
+    <item android:id="@android:id/background" >
+        <clip>
+            <shape>
+                <gradient
+                    android:startColor="@color/music_player_seek_bar"
+                    android:centerColor="@color/music_player_seek_bar"
+                    android:endColor="@color/music_player_seek_bar"
+                    />
+
+            </shape>
+        </clip>
+    </item>
+
+    <!--<item android:id="@android:id/secondaryProgress" android:drawable="@color/music_player_seek_bar_buffer"/>-->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <gradient
+                    android:startColor="@color/music_player_seek_bar"
+                    android:centerColor="@color/music_player_seek_bar"
+                    android:endColor="@color/music_player_seek_bar_buffer"
+                    />
+
+            </shape>
+        </clip>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <gradient
+                    android:startColor="@color/music_player_seek_bar_darker"
+                    android:centerColor="@color/music_player_seek_bar_darker"
+                    android:endColor="@color/music_player_seek_bar_darker"
+                    />
+
+            </shape>
+        </clip>
+    </item>
+
+
+</layer-list>
