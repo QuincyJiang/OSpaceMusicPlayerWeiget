@@ -7,12 +7,13 @@ package ospace.com.ospacemusicplayerweiget;
 public interface MusicControllerInterf  {
     void playMusic();
     void pauseMusic();
-    void playforwardMuisc();
+    void playforwardMusic();
     void playBackwardMusic();
     void seekTo(int progress);
     String getCurrentPosition();
     int getBuffering();
     MusicPlayingState isMusicPlaying();
     void setMusicURL(String url);
+    String getMusicLength();
 
 }

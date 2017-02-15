@@ -5,7 +5,7 @@ package ospace.com.ospacemusicplayerweiget;
  */
 
 public enum MusicPlayingState {
-PLAYING(0),PAUSE(1),STOP(2);
+PLAYING(0),PAUSE(1),STOP(2),FINISH(3);
 
     private int isPlaying;
 

@@ -19,12 +19,14 @@ public class MusicPlayerService extends Service implements  MediaPlayer.OnBuffer
     private MediaPlayer player;
     MusicPlayingState isMusicPlaying  =MusicPlayingState.STOP;
 private  String url;
-private int buffering;
+private int buffering=0;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+//        初始化MediaPlayer
+//        设置监听器
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         player.setOnCompletionListener(this);
@@ -46,6 +48,7 @@ private int buffering;
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //释放资源
         player.release();
         player = null;
     }
@@ -56,10 +59,12 @@ private int buffering;
         return new MusicController();
     }
 
+    //该类对外提供基本的对播放器的控制方法
     public class MusicController extends Binder implements MusicControllerInterf{
         @Override
         public void playMusic() {
-if(player!=null&&player.getCurrentPosition()==0){
+            //播放状态为停止时，才会去重新请求url并播放
+if(player!=null&&(isMusicPlaying==MusicPlayingState.STOP||isMusicPlaying()==MusicPlayingState.FINISH)){
     try {
         player.reset();
         player.setDataSource(url);
@@ -68,7 +73,7 @@ if(player!=null&&player.getCurrentPosition()==0){
         e.printStackTrace();
     }
 }
-            if(player!=null&&player.getCurrentPosition()!=0){
+            if(player!=null&&(isMusicPlaying==MusicPlayingState.PAUSE)){
                 player.start();
                 isMusicPlaying=MusicPlayingState.PLAYING;
             }
@@ -84,24 +89,29 @@ if(player!=null&&isMusicPlaying==MusicPlayingState.PLAYING){
         }
 
         @Override
-        public void playforwardMuisc() {
+        public void playforwardMusic() {
             {
+                if(player!=null)
                 player.seekTo(player.getCurrentPosition() + 10000);
             }
         }
         @Override
         public void playBackwardMusic() {
+            if(player!=null)
             player.seekTo(player.getCurrentPosition()-10000);
         }
 
         @Override
         public void seekTo(int progress) {
+            if(player!=null)
             player.seekTo(progress);
         }
 
         @Override
         public String getCurrentPosition() {
-            return StringUtils.duration2Str(player.getCurrentPosition());
+            if(player!=null){
+            return StringUtils.duration2Str(player.getCurrentPosition());}
+            else return "0:00";
         }
 
         @Override
@@ -119,6 +129,16 @@ if(player!=null&&isMusicPlaying==MusicPlayingState.PLAYING){
             MusicPlayerService.this.url = url;
 
         }
+
+        @Override
+        public String getMusicLength() {
+            if(player!=null){
+                return StringUtils.duration2Str(player.getDuration());
+            }
+            return "00:00";
+        }
+
+
     }
 
     @Override
@@ -128,7 +148,7 @@ if(player!=null&&isMusicPlaying==MusicPlayingState.PLAYING){
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-isMusicPlaying =MusicPlayingState.STOP;
+isMusicPlaying =MusicPlayingState.FINISH;
     }
 
     @Override
@@ -141,4 +161,6 @@ isMusicPlaying =MusicPlayingState.STOP;
 mp.start();
         isMusicPlaying=MusicPlayingState.PLAYING;
     }
+
+
 }
